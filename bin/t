@@ -1,0 +1,73 @@
+#!/usr/bin/env php
+<?php
+
+class PhpUnitWrapper
+{
+    private ?string $outputStyle = null;
+
+    public function boot(): void
+    {
+        $this->parseArguments();
+
+        if (!$this->outputStyle) {
+            $_SERVER['argv'][] = '--testdox';
+            $_SERVER['argv'][] = '--colors=never';
+        }
+
+//        $_SERVER['argv'][] = '--order-by=defects';
+        $_SERVER['argv'][] = '--stop-on-failure';
+
+        require '/app/bin/phpunit';
+    }
+
+    protected function parseArguments(): void
+    {
+        // short aliases for options
+        foreach ($_SERVER['argv'] as $key => &$value) {
+            // replace @ to --group
+            if ($value === '@') {
+                $value = '---group';
+                continue;
+            }
+
+            // replace -f to --filter
+            if ($value === '-f') {
+                $value = '--filter';
+                continue;
+            }
+
+            // replace -i to --debug
+            if ($value === '-i') {
+                $value = '--debug';
+                continue;
+            }
+
+            // replace -e to --stderr
+            if ($value === '-e') {
+                $value             = '--stderr';
+                $this->outputStyle = 'stderr';
+                continue;
+            }
+
+            // convert "AuthTest::testWrongLogin" to "--filter AuthTest --filter testWrongLogin"
+            if (str_contains($value, ':')) {
+                $shortArgument = explode(':', $value);
+                unset($_SERVER['argv'][$key]);
+
+                // check if first argument is file/folder path or just class name
+                if (str_contains($shortArgument[0], '/')) {
+                    $_SERVER['argv'][] = $shortArgument[0];
+                } else {
+                    $_SERVER['argv'][] = '--filter';
+                    $_SERVER['argv'][] = $shortArgument[0];
+                }
+
+                $_SERVER['argv'][] = '--filter';
+                $_SERVER['argv'][] = $shortArgument[1];
+            }
+        }
+    }
+}
+
+$phpUnitWrapper = new PhpUnitWrapper();
+$phpUnitWrapper->boot();

@@ -1,0 +1,128 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+class Migrator
+{
+    private const MIGRATIONS_PATH = '/app/migrations/';
+    private const ACTION_HELP = '-h';
+    private const ACTION_CREATE = 'c';
+    private const ACTION_MIGRATE = 'm';
+    private const ACTION_QUICK_MIGRATE = 'q';
+    private const ACTION_ROLLBACK = 'r';
+    private const ACTION_REMIGRATE_LAST = 're';
+
+    private string $command;
+    private array $arguments;
+
+    public function __construct(array $argv)
+    {
+        if (!isset($argv[1])) {
+            $this->command = self::ACTION_HELP;
+        } elseif (in_array(self::ACTION_HELP, $argv, true)) {
+            $this->command = self::ACTION_HELP;
+        } else {
+            $this->command = $argv[1];
+        }
+
+        $this->arguments = array_slice($argv, 1);
+    }
+
+    public function run(): void
+    {
+        match ($this->command) {
+            self::ACTION_HELP => $this->manual(),
+            self::ACTION_CREATE => $this->create(),
+            self::ACTION_MIGRATE => $this->migrate(),
+            self::ACTION_QUICK_MIGRATE => $this->quickMigrate(),
+            self::ACTION_ROLLBACK => $this->rollback(),
+            self::ACTION_REMIGRATE_LAST => $this->quickRollback(),
+        };
+    }
+
+    protected function manual(): void
+    {
+        $this->printLn('mig (command)');
+        $this->printLn();
+        $this->printLn('List of available commands:');
+        $this->printLn(self::ACTION_CREATE . ' - create migration');
+        $this->printLn(self::ACTION_MIGRATE . ' - migrate');
+        $this->printLn(self::ACTION_QUICK_MIGRATE . ' - quick migrate (create migration & migrate). Same as mig ' . self::ACTION_CREATE . ' & mig ' . self::ACTION_MIGRATE);
+        $this->printLn(self::ACTION_ROLLBACK . ' [prev] - rollback FQCN or alias (first, prev, next, latest)');
+        $this->printLn(self::ACTION_REMIGRATE_LAST . ' - remigrate last (rollback latest, delete migration file, create migration & migrate)');
+        $this->printLn();
+        $this->printLn();
+    }
+
+    protected function create(): void
+    {
+        $this->system('console make:migration --ansi');
+    }
+
+    protected function migrate(): void
+    {
+        $this->system("console doctrine:migrations:migrate -n --query-time --ansi");
+    }
+
+    protected function quickMigrate(): void
+    {
+        $this->create();
+        $this->migrate();
+    }
+
+    protected function rollback(): void
+    {
+        if (!isset($this->arguments[0])) {
+            throw new RuntimeException('set version');
+        }
+
+        $version = $this->arguments[1];
+        if (!$version) {
+            $version = "prev";
+        }
+
+        $this->system("console doctrine:migrations:migrate {$version} --no-interaction --ansi");
+    }
+
+    protected function quickRollback(): void
+    {
+        $this->rollback();
+
+        $list = glob(self::MIGRATIONS_PATH. "2*/*/Version*.php");
+        
+        if ($list) {
+            $lastMigrationFile = end($list);
+            
+            if ($lastMigrationFile) {
+                unlink($lastMigrationFile);
+            }
+        }
+
+        $this->create();
+        $this->migrate();
+    }
+
+    protected function printLn(string $line = ''): void {
+        print "\n" . $line;
+    }
+
+    protected function system(string $command): void
+    {
+        $this->printLn();
+        $this->printLn($command);
+        $this->printLn();
+        system($command);
+        $this->printLn();
+    }
+}
+
+$migrator = new Migrator($argv);
+
+try {
+    $migrator->run();
+} catch (Exception $e) {
+    print "\n";
+    print "\n Exception:" . $e->getMessage();
+    print "\n";
+}

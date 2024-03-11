@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eux
+
+php vendor/bin/phpcs -s

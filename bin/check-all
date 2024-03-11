@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eux
+
+# ----- code-style:
+code-style
+
+# ----- static-analysis:
+static-analysis
+
+# ----- security-audit:
+#security-audit
+
+# ----- tests:
+t
+
+# ----- migrations:
+console doctrine:migrations:up-to-date

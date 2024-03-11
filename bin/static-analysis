@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eux
+
+php vendor/bin/phpstan analyse tests -l 9
+php vendor/bin/phpstan analyse src -l 9

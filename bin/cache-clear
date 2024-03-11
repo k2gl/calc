@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eux
+
+console cache:clear
+console cache:clear -e test
