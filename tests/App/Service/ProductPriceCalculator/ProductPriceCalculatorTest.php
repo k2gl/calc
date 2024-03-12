@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace AppTests\App\Service\ProductPriceCalculator;
 
+use App\Entity\Coupon;
+use App\Entity\Product;
+use App\Entity\TaxSystem;
+use App\Model\PurchaseProduct\PurchaseProductContext;
+use App\Reference\CouponDiscountType;
 use App\Service\ProductPriceCalculator\ProductPriceCalculator;
-use App\Service\ProductPriceCalculator\ProductPriceCalculatorContext;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,11 +25,18 @@ class ProductPriceCalculatorTest extends TestCase
         float $taxSize,
         float $expected,
     ): void {
+        // arrange
+        $product = new Product();
+        $product->setPrice($productPrice);
+
+        $taxSystem = new TaxSystem();
+        $taxSystem->setAmount($taxSize);
+
         // act
-        $sut = (new ProductPriceCalculator())->getPrice(
-            context: new ProductPriceCalculatorContext(
-                productPrice: $productPrice,
-                taxSize:      $taxSize,
+        $sut = $this->getProductPriceCalculator()->getPrice(
+            context: new PurchaseProductContext(
+                product: $product,
+                taxSystem: $taxSystem,
             ),
         );
 
@@ -52,12 +63,23 @@ class ProductPriceCalculatorTest extends TestCase
         float $taxSize,
         float $expected,
     ): void {
+        // arrange
+        $product = new Product();
+        $product->setPrice($productPrice);
+
+        $taxSystem = new TaxSystem();
+        $taxSystem->setAmount($taxSize);
+
+        $coupon = new Coupon();
+        $coupon->setDiscountType(CouponDiscountType::FIXED);
+        $coupon->setDiscountAmount($fixedDiscount);
+
         // act
-        $sut = (new ProductPriceCalculator())->getPrice(
-            context: new ProductPriceCalculatorContext(
-                productPrice:  $productPrice,
-                taxSize:       $taxSize,
-                fixedDiscount: $fixedDiscount,
+        $sut = $this->getProductPriceCalculator()->getPrice(
+            context: new PurchaseProductContext(
+                product: $product,
+                taxSystem: $taxSystem,
+                coupon: $coupon,
             ),
         );
 
@@ -82,12 +104,23 @@ class ProductPriceCalculatorTest extends TestCase
         float $taxSize,
         float $expected,
     ): void {
+        // arrange
+        $product = new Product();
+        $product->setPrice($productPrice);
+
+        $taxSystem = new TaxSystem();
+        $taxSystem->setAmount($taxSize);
+
+        $coupon = new Coupon();
+        $coupon->setDiscountType(CouponDiscountType::PERCENTAGE);
+        $coupon->setDiscountAmount($percentageDiscount);
+
         // act
-        $sut = (new ProductPriceCalculator())->getPrice(
-            context: new ProductPriceCalculatorContext(
-                productPrice:       $productPrice,
-                taxSize:            $taxSize,
-                percentageDiscount: $percentageDiscount,
+        $sut = $this->getProductPriceCalculator()->getPrice(
+            context: new PurchaseProductContext(
+                product: $product,
+                taxSystem: $taxSystem,
+                coupon: $coupon,
             ),
         );
 
@@ -101,5 +134,10 @@ class ProductPriceCalculatorTest extends TestCase
         return [
             ['productPrice' => 200, 'percentageDiscount' => 50, 'taxSize' => 10, 'expected' => 110.0],
         ];
+    }
+
+    protected function getProductPriceCalculator(): ProductPriceCalculator
+    {
+        return (new ProductPriceCalculator());
     }
 }

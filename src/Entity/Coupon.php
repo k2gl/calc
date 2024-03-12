@@ -66,4 +66,22 @@ class Coupon
     {
         $this->discountAmount = $discountAmount;
     }
+
+    public function getFixedDiscountAmount(): ?float
+    {
+        if (!$this->getDiscountType()->is(CouponDiscountType::FIXED)) {
+            return null;
+        }
+
+        return $this->getDiscountAmount();
+    }
+
+    public function getPercentageDiscountAmount(): ?float
+    {
+        if (!$this->getDiscountType()->is(CouponDiscountType::PERCENTAGE)) {
+            return null;
+        }
+
+        return $this->getDiscountAmount();
+    }
 }

@@ -16,8 +16,8 @@ services:
     App\:
         resource: '../src/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/{DependencyInjection,Entity,Kernel.php}'
+
 
     K2gl\Component\Validator\Constraint\EntityExist\:
         resource: '../vendor/k2gl/entity-exist/src/'

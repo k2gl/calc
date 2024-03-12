@@ -30,6 +30,7 @@
         "symfony/uid": "7.0.*",
         "symfony/validator": "7.0.*",
         "symfony/yaml": "7.0.*",
+        "systemeio/test-for-candidates": "^1.0",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "vodevel/api-doc-bundle-type-describer": "^1.0"
