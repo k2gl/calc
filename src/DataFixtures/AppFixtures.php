@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Coupon;
 use App\Entity\Product;
+use App\Entity\Tax;
 use App\Reference\CouponDiscountType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -16,13 +17,14 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $this->seedProducts($manager);
-        $this->seedCoupons($manager);
+        $this->seedProduct($manager);
+        $this->seedCoupon($manager);
+        $this->seedTax($manager);
 
         $manager->flush();
     }
 
-    private function seedProducts(ObjectManager $manager): void
+    private function seedProduct(ObjectManager $manager): void
     {
         for ($i = 1; $i <= 10; $i++) {
             $product = new Product();
@@ -37,9 +39,9 @@ class AppFixtures extends Fixture
         }
     }
 
-    private function seedCoupons(ObjectManager $manager): void
+    private function seedCoupon(ObjectManager $manager): void
     {
-        for ($i = 1; $i <= 35; $i++) {
+        for ($i = 1; $i <= 3; $i++) {
             $coupon = new Coupon();
 
             $coupon->setDiscountType(CouponDiscountType::any());
@@ -47,6 +49,43 @@ class AppFixtures extends Fixture
             $coupon->setDiscountAmount(random_int(2, 25));
 
             $manager->persist($coupon);
+        }
+    }
+
+    private function seedTax(ObjectManager $manager): void
+    {
+        /** @var list<array{countryCode: string, masks: list<string>, amount: float}> $data */
+        $data = [
+            [
+                'countryCode' => 'DE',
+                'masks' => ['XXXXXXXXX'],
+                'amount' => 19,
+            ],
+            [
+                'countryCode' => 'IT',
+                'masks' => ['XXXXXXXXXXX'],
+                'amount' => 22,
+            ],
+            [
+                'countryCode' => 'GR',
+                'masks' => ['XXXXXXXXX'],
+                'amount' => 24,
+            ],
+            [
+                'countryCode' => 'FR',
+                'masks' => ['YYXXXXXXXXX'],
+                'amount' => 20,
+            ],
+        ];
+
+        foreach ($data as $item) {
+            $tax = new Tax();
+
+            $tax->setCountryCode($item['countryCode']);
+            $tax->setTaxNumberMasks($item['masks']);
+            $tax->setAmount($item['amount']);
+
+            $manager->persist($tax);
         }
     }
 }
