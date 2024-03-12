@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppTests\Core;
+namespace AppTests\Core\TestCase;
 
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

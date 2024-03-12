@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
  *
  * @method Coupon|null find($id, $lockMode = null, $lockVersion = null)
  * @method Coupon|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Coupon|null findOneByCode(string $code)
  * @method Coupon[]    findAll()
  * @method Coupon[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */

@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+use function trim;
+
 #[AsEventListener]
 class BadRequestListener
 {
@@ -60,7 +62,7 @@ class BadRequestListener
             $violations[] = [
                 'code' => $constraintViolation->getCode(),
                 'message' => $constraintViolation->getMessage(),
-                'propertyPath' => $constraintViolation->getPropertyPath(),
+                'propertyPath' => trim($constraintViolation->getPropertyPath(), '$'),
             ];
         }
 

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\CalculatePrice;
+namespace App\Controller\CalculateProductPrice\Request;
 
 use App\Entity\Coupon;
 use App\Entity\Product;
+use App\Model\TaxNumber\Validator\AssertTaxNumber;
 use Fusonic\HttpKernelBundle\Attribute\FromRequest;
 use K2gl\Component\Validator\Constraint\EntityExist\AssertEntityExist;
 use OpenApi\Attributes\Property;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[FromRequest]
 #[RequestBody]
-final readonly class CalculatePriceRequest
+final readonly class CalculateProductPriceRequest
 {
     public function __construct(
         #[Assert\NotBlank]
@@ -26,13 +27,16 @@ final readonly class CalculatePriceRequest
         #[Property(example: '1')]
         public int $product,
         #[Assert\NotBlank]
+        #[AssertTaxNumber]
+        #[Property(example: 'DE123456789')]
+        public string $taxNumber,
         #[AssertEntityExist(
             entity: Coupon::class,
             property: 'code',
             message: 'Coupon does not exist',
         )]
         #[Property(example: 'D10')]
-        public string $couponCode,
+        public ?string $couponCode,
     ) {
     }
 }

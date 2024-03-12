@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
 
     private function seedCoupon(ObjectManager $manager): void
     {
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $coupon = new Coupon();
 
             $coupon->setDiscountType(CouponDiscountType::any());

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppTests\Service\ProductPriceCalculator;
+namespace AppTests\App\Service\ProductPriceCalculator;
 
 use App\Service\ProductPriceCalculator\ProductPriceCalculator;
 use App\Service\ProductPriceCalculator\ProductPriceCalculatorContext;
