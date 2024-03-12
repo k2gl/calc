@@ -7,13 +7,13 @@ namespace App\Entity;
 use App\Reference\CouponDiscountType;
 use App\Repository\CouponRepository;
 use App\Repository\ProductRepository;
-use App\Repository\TaxRepository;
+use App\Repository\TaxSystemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
-#[ORM\Entity(repositoryClass: TaxRepository::class)]
-class Tax
+#[ORM\Entity(repositoryClass: TaxSystemRepository::class)]
+class TaxSystem
 {
     #[ORM\Id]
     #[ORM\Column(length: 26, unique: true)]
@@ -22,6 +22,7 @@ class Tax
     #[ORM\Column(length: 2, unique: true)]
     private string $countryCode;
 
+    /** @psalm-var list<string> $taxNumberMasks */
     #[ORM\Column]
     private array $taxNumberMasks = [];
 
@@ -48,11 +49,13 @@ class Tax
         $this->countryCode = $countryCode;
     }
 
+    /** @return list<string> */
     public function getTaxNumberMasks(): array
     {
         return $this->taxNumberMasks;
     }
 
+    /** @param list<string> $taxNumberMasks */
     public function setTaxNumberMasks(array $taxNumberMasks): void
     {
         $this->taxNumberMasks = $taxNumberMasks;

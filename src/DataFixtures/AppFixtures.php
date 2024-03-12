@@ -6,7 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Coupon;
 use App\Entity\Product;
-use App\Entity\Tax;
+use App\Entity\TaxSystem;
 use App\Reference\CouponDiscountType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -79,7 +79,7 @@ class AppFixtures extends Fixture
         ];
 
         foreach ($data as $item) {
-            $tax = new Tax();
+            $tax = new TaxSystem();
 
             $tax->setCountryCode($item['countryCode']);
             $tax->setTaxNumberMasks($item['masks']);
