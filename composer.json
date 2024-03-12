@@ -11,6 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
         "fusonic/http-kernel-bundle": "^1.1",
+        "k2gl/enum": "^2.0",
         "nelmio/api-doc-bundle": "^4.15",
         "nette/php-generator": "^4.1",
         "runtime/frankenphp-symfony": "^0.2.0",
