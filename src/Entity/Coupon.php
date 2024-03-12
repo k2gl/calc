@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Module\User\Reference\CouponDiscountType;
+use App\Reference\CouponDiscountType;
+use App\Repository\CouponRepository;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
 
-#[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ORM\Entity(repositoryClass: CouponRepository::class)]
 class Coupon
 {
     #[ORM\Id]

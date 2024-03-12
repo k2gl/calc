@@ -1,17 +1,12 @@
 nelmio_api_doc:
     documentation:
         info:
-            title: cv.k2gl.localhost
-            version: 0.1.0
+            title: calc.sio.localhost
+            version: 0.0.1
         components:
-            securitySchemes:
-                Bearer:
-                    type: http
-                    scheme: bearer
-                    bearerFormat: JWT
         security:
             - Bearer: []
     areas:
         disable_default_routes: true
         path_patterns:
-            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+            - ^/(?!/api/doc$|$)

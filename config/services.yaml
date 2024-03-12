@@ -19,6 +19,11 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
 
+    K2gl\Component\Validator\Constraint\EntityExist\:
+        resource: '../vendor/k2gl/entity-exist/src/'
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: validator.constraint_validator }
 
 when@test:
     services:

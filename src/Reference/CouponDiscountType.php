@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Module\User\Reference;
+namespace App\Reference;
 
 use K2gl\Enum\ExtendedBackedEnum;
 use K2gl\Enum\ExtendedBackedEnumInterface;

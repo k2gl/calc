@@ -6,7 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Coupon;
 use App\Entity\Product;
-use App\Module\User\Reference\CouponDiscountType;
+use App\Reference\CouponDiscountType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
