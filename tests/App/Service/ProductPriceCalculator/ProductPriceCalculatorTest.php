@@ -12,6 +12,8 @@ use App\Reference\CouponDiscountType;
 use App\Service\ProductPriceCalculator\ProductPriceCalculator;
 use PHPUnit\Framework\TestCase;
 
+use function K2gl\PHPUnitFluentAssertions\fact;
+
 /**
  * @covers \App\Service\ProductPriceCalculator\ProductPriceCalculator
  */
@@ -41,7 +43,7 @@ class ProductPriceCalculatorTest extends TestCase
         );
 
         // assert
-        $this->assertEquals($expected, $sut);
+        fact($sut)->is($expected);
     }
 
     /** @return list<array{productPrice: float, taxSize: float, expected: float}> */
@@ -84,7 +86,7 @@ class ProductPriceCalculatorTest extends TestCase
         );
 
         // assert
-        $this->assertEquals($expected, $sut);
+        fact($sut)->is($expected);
     }
 
     /** @return list<array{productPrice: float, fixedDiscount: float, taxSize: float, expected: float}> */
@@ -125,7 +127,7 @@ class ProductPriceCalculatorTest extends TestCase
         );
 
         // assert
-        $this->assertEquals($expected, $sut);
+        fact($sut)->is($expected);
     }
 
     /** @return list<array{productPrice: float, percentageDiscount: float, taxSize: float, expected: float}> */

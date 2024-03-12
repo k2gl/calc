@@ -46,6 +46,7 @@ class CalculateProductPriceControllerTest extends ApiControllerTestCase
                     ],
         );
 
+        // assert
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
 
         fact($this->getResponse()->getContent())->is('165');
@@ -69,6 +70,7 @@ class CalculateProductPriceControllerTest extends ApiControllerTestCase
                     ],
         );
 
+        // assert
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
 
         fact($this->getResponse()->getContent())->is('110');
@@ -90,6 +92,7 @@ class CalculateProductPriceControllerTest extends ApiControllerTestCase
                     ],
         );
 
+        // assert
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
 
         fact($this->getResponse()->getContent())->is('220');
@@ -107,6 +110,7 @@ class CalculateProductPriceControllerTest extends ApiControllerTestCase
                     ],
         );
 
+        // assert
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
 
         $this->assertResponseContainsViolation(
@@ -128,6 +132,7 @@ class CalculateProductPriceControllerTest extends ApiControllerTestCase
                     ],
         );
 
+        // assert
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
 
         $this->assertResponseContainsViolation(
@@ -159,6 +164,7 @@ class CalculateProductPriceControllerTest extends ApiControllerTestCase
                     ],
         );
 
+        // assert
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
 
         $this->assertResponseContainsViolation(

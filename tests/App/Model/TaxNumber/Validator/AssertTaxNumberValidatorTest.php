@@ -28,7 +28,6 @@ class AssertTaxNumberValidatorTest extends ConstraintValidatorTestCase
         parent::setUp();
     }
 
-
     #[\Override]
     protected function createValidator(): AssertTaxNumberValidator
     {

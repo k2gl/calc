@@ -7,7 +7,6 @@ namespace App\Controller\CalculateProductPrice;
 use App\Controller\CalculateProductPrice\Request\CalculateProductPriceRequest;
 use App\Model\PurchaseProduct\PurchaseProductContextBuilder;
 use App\Service\ProductPriceCalculator\ProductPriceCalculator;
-use Exception;
 use InvalidArgumentException;
 use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

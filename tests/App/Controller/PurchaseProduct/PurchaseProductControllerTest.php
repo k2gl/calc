@@ -29,6 +29,7 @@ class PurchaseProductControllerTest extends ApiControllerTestCase
     {
         // arrange
         TaxSystemFactory::createOne(['countryCode' => 'ZX', 'taxNumberMasks' => ['XYX'], 'amount' => 50]);
+
         $product = ProductFactory::createOne(['price' => 10]);
 
         // act
@@ -52,6 +53,7 @@ class PurchaseProductControllerTest extends ApiControllerTestCase
     {
         // arrange
         TaxSystemFactory::createOne(['countryCode' => 'ZX', 'taxNumberMasks' => ['XYX'], 'amount' => 50]);
+
         $product = ProductFactory::createOne(['price' => 100]);
 
         // act
@@ -75,6 +77,7 @@ class PurchaseProductControllerTest extends ApiControllerTestCase
     {
         // arrange
         TaxSystemFactory::createOne(['countryCode' => 'ZX', 'taxNumberMasks' => ['XYX'], 'amount' => 50]);
+
         $product = ProductFactory::createOne(['price' => 1000]);
 
         // act
@@ -98,6 +101,7 @@ class PurchaseProductControllerTest extends ApiControllerTestCase
     {
         // arrange
         TaxSystemFactory::createOne(['countryCode' => 'ZX', 'taxNumberMasks' => ['XYX'], 'amount' => 50]);
+
         $product = ProductFactory::createOne(['price' => 100]);
 
         // act
