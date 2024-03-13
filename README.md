@@ -1,15 +1,21 @@
 # calc.sio
 
-## Запуск:
-Приложение поставляется в Docker образе, если на вашем компьютере еще нет Docker - самое время установить.
+## [Запуск](/#installing-the-service):
+Приложение поставляется в Docker образе, если на вашем компьютере еще нет Docker - самое время [установить Docker и Docker Compose](https://docs.docker.com/compose/gettingstarted/).
 
 1. Клонируй репозиторий с исходным кодом приложения.
 2. В терминале операционной системы перейди в директорию, содержащую этот файл и вызови:
     1. ```make install``` - для инициализации приложения.
     2. ```make up``` - для запуска приложения.
 
+## [Настройка](/#configuring-the-service):
+Переменные окружения и рабочие порты для внутренних служб и сервисов приложения, можно переопределить или добавить в конфигурационных файлах:
+- [./frankenphp/env/docker-compose.env](./frankenphp/env/docker-compose.env) - базовый шаблон безопасный для размещения в репозитории.
+- ```frankenphp/env/docker-compose.override.env``` - актуальный конфигурационный файл созданный (см. [Makefile](./Makefile)) на основе базового шаблона.
+
 ## API спецификация:
-- [Swagger-ui](https://calc.sio.localhost:4600/api/doc)
+Cпецификация API доступна после [запуска](/#installing-the-service) приложения по адресу
+[https://calc.sio.localhost:4600/api/doc](https://calc.sio.localhost:4600/api/doc)
 
 ## [Подключение к терминалу приложения](/#how-to-connect-to-the-service-terminal):
 В терминале операционной системы перейди в директорию, содержащую этот файл и вызови ```make php```.
